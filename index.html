@@ -17,7 +17,6 @@
         .loading { animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
         
-        /* Custom Scrollbar for Textarea */
         textarea::-webkit-scrollbar { width: 8px; }
         textarea::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
         textarea::-webkit-scrollbar-thumb { background: #4f6f52; border-radius: 4px; }
@@ -27,12 +26,11 @@
 
     <!-- Header Section -->
     <header class="bg-sage-dark text-white py-16 px-6 text-center shadow-lg border-b-4 border-gold-main relative overflow-hidden">
-        <!-- Decorative element -->
         <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'#ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
         
         <div class="max-w-3xl mx-auto text-center flex flex-col items-center relative z-10">
             <span class="bg-white px-5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-4 inline-block text-sage-dark shadow-sm">
-                Edisi Idul Fitri
+                Edisi Ramadhan & Idul Fitri
             </span>
             <h1 class="text-4xl md:text-5xl font-bold mb-3 text-white">Fitrah Connect</h1>
             <p class="text-white/90 text-lg md:text-xl italic font-light">"Menyambung Rasa, Menjaga Adab, Meraih Fitrah."</p>
@@ -41,9 +39,9 @@
 
     <!-- Main Content -->
     <main class="max-w-2xl mx-auto -mt-8 px-4 sm:px-6 relative z-20">
-        <div class="bg-white rounded-3xl p-6 md:p-8 shadow-2xl border border-slate-100">
+        <div class="bg-white rounded-3xl p-6 md:p-8 shadow-2xl border border-slate-100 text-center">
             
-            <!-- Notification Box (Hidden by default) -->
+            <!-- Notification Box -->
             <div id="notificationBox" class="hidden mb-6 p-4 rounded-xl text-sm font-semibold transition-all duration-300"></div>
 
             <div class="bg-gold-soft rounded-2xl p-5 md:p-6 mb-8 border border-gold-main/30 text-left">
@@ -68,7 +66,7 @@
                         <label class="block text-sm font-bold text-sage-dark mb-2">3. Pilih Bahasa</label>
                         <select id="language" class="w-full p-3.5 rounded-xl bg-white border border-slate-200 outline-none focus:ring-2 focus:ring-[#4f6f52] shadow-sm text-sm">
                             <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                            <option value="Bahasa Jawa (gunakan Krama Alus)">Bahasa Jawa (Krama)</option>
+                            <option value="Bahasa Jawa (Krama Alus)">Bahasa Jawa (Krama)</option>
                             <option value="Bahasa Sunda (Lemes)">Bahasa Sunda</option>
                             <option value="English">Bahasa Inggris</option>
                         </select>
@@ -78,165 +76,117 @@
                 <!-- Input 4: Konteks -->
                 <div>
                     <label class="block text-sm font-bold text-sage-dark mb-2">
-                        4. Cerita Spesial <span class="text-[10px] font-normal text-slate-500 uppercase ml-1">(Opsional)</span>
+                        4. Cerita Spesial Kamu Dengannya <span class="text-[10px] font-normal text-slate-500 uppercase ml-1">(Opsional)</span>
                     </label>
                     <textarea id="context" placeholder="Misal: Ingat saat beliau bantu project pertama saya..." class="w-full p-3.5 rounded-xl bg-white border border-slate-200 h-24 focus:ring-2 focus:ring-[#4f6f52] outline-none transition shadow-sm text-sm resize-none"></textarea>
-                    <p class="text-[10px] text-slate-500 mt-1.5 italic">*Boleh dikosongkan jika tidak ada cerita khusus.</p>
                 </div>
             </div>
 
             <!-- Generate Button -->
             <button onclick="generateMessage()" id="btnAction" class="w-full bg-sage-dark text-white font-bold py-4 rounded-2xl transition shadow-lg flex items-center justify-center gap-2 hover:bg-slate-800 active:scale-95 transform">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                </svg>
-                <span id="btnText">Rangkai Pesan Tulus</span>
+                <span id="btnText">✨ Rangkai Pesan Tulus</span>
             </button>
 
             <!-- Result Box -->
-            <div id="resultContainer" class="hidden mt-10 pt-8 border-t-2 border-dashed border-slate-200 transition-all duration-500">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-sm font-bold text-sage-dark uppercase tracking-widest">Draf Pesan AI</h3>
-                    <span class="flex h-3 w-3 relative">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                    </span>
-                </div>
-                
-                <div id="outputMessage" class="bg-white p-6 rounded-2xl border-2 border-gold-main text-slate-700 leading-relaxed text-left text-sm md:text-base shadow-inner whitespace-pre-wrap">
-                    <!-- Text will be injected here -->
-                </div>
-                
-                <div class="mt-5 grid grid-cols-2 gap-3">
-                    <button onclick="copyText()" class="bg-slate-800 text-white py-3.5 rounded-xl text-sm font-bold shadow hover:bg-slate-700 transition flex items-center justify-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                        Salin Teks
-                    </button>
-                    <a id="waLink" target="_blank" class="border-2 border-sage-dark text-sage-dark py-3.5 rounded-xl text-sm font-bold hover:bg-sage-dark hover:text-white transition flex items-center justify-center gap-2 cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.888-4.439 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                        </svg>
-                        Kirim WA
-                    </a>
+            <div id="resultContainer" class="hidden mt-10 pt-8 border-t-2 border-dashed border-slate-200">
+                <div id="outputMessage" class="bg-white p-6 rounded-2xl border-2 border-gold-main text-slate-700 leading-relaxed text-left text-sm md:text-base shadow-inner whitespace-pre-wrap mb-5"></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="copyText()" class="bg-slate-800 text-white py-3.5 rounded-xl text-sm font-bold shadow hover:bg-slate-700 transition">Salin Teks</button>
+                    <a id="waLink" target="_blank" class="border-2 border-sage-dark text-sage-dark py-3.5 rounded-xl text-sm font-bold hover:bg-sage-dark hover:text-white transition flex items-center justify-center">Kirim WA</a>
                 </div>
             </div>
         </div>
 
         <div class="text-center mt-10 text-xs font-semibold text-slate-400">
-            © 2026 Developed by Tenia Novalia <br>
-            <span class="font-normal">Built with Vibe Coding & Gemini AI</span>
+            © 2026 Developed by Tenia Novalia - Built with Agentic AI
         </div>
     </main>
 
     <script>
-        // Kunci API Kamu
-        const apiKey = "AIzaSyCCRP_2eBbf2SDcdVuwnbjIGEFlKpSWcjY"; 
+        // API KEY MILIK TENIA
+        const MY_API_KEY = "AIzaSyCCRP_2eBbf2SDcdVuwnbjIGEFlKpSWcjY";
 
         function showNotification(message, type = 'error') {
             const box = document.getElementById('notificationBox');
             box.innerText = message;
             box.className = `mb-6 p-4 rounded-xl text-sm font-semibold transition-all duration-300 block ${type === 'error' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-green-50 text-green-700 border border-green-200'}`;
             
-            // Auto hide after 5 seconds
-            setTimeout(() => {
-                box.classList.add('hidden');
-                box.classList.remove('block');
-            }, 5000);
+            if(type === 'error') {
+                box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
 
         async function generateMessage() {
             const name = document.getElementById('recipientName').value.trim();
-            const mood = document.getElementById('mood').value;
-            const language = document.getElementById('language').value;
             const context = document.getElementById('context').value.trim();
+            const mood = document.getElementById('mood').value;
+            const lang = document.getElementById('language').value;
             
-            const resultContainer = document.getElementById('resultContainer');
-            const output = document.getElementById('outputMessage');
             const btn = document.getElementById('btnAction');
             const btnText = document.getElementById('btnText');
+            const resultContainer = document.getElementById('resultContainer');
 
-            // Validasi Input
-            if (!name) { 
-                showNotification("Hai Tenia! Isi nama penerimanya dulu ya sebelum merangkai pesan.", "error"); 
-                document.getElementById('recipientName').focus();
-                return; 
+            if (!name) {
+                showNotification("Tenia, isi dulu nama penerimanya ya!", "error");
+                return;
             }
 
-            // State: Loading
             btn.disabled = true;
-            btnText.innerHTML = "<span class='loading'>Menyusun Kata...</span>";
+            btnText.innerText = "Sedang Merangkai...";
             resultContainer.classList.add('hidden');
             document.getElementById('notificationBox').classList.add('hidden');
 
-            const promptText = `Tuliskan satu ucapan selamat Hari Raya Idul Fitri yang tulus untuk ${name}. 
-            Gunakan ${language} dengan gaya/suasana ${mood}. 
-            ${context ? `Masukkan konteks cerita ini ke dalam ucapan: "${context}".` : ''}
-            Instruksi Penting: Langsung berikan hasil ucapannya saja. Jangan gunakan kalimat pengantar (seperti 'Ini ucapannya:' atau 'Tentu, berikut adalah'). Buat senatural mungkin seperti manusia yang mengetik.`;
+            const prompt = `Tuliskan satu ucapan selamat Hari Raya Idul Fitri untuk ${name}. Suasana: ${mood}. Bahasa: ${lang}. ${context ? `Hubungkan dengan cerita: ${context}` : ''}. Langsung hasil ucapannya saja tanpa pengantar.`;
 
             try {
-                // LOGIKA PINTAR: 
-                // Jika apiKey diisi (saat di Tiiny.site), gunakan model gemini-1.5-flash
-                // Jika apiKey kosong (saat Preview di Canvas), gunakan model khusus canvas
-                const modelName = apiKey ? "gemini-1.5-flash" : "gemini-2.5-flash-preview-09-2025";
-                const modelEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+                // Gunakan model gemini-1.5-flash untuk kompatibilitas API Key standar
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${MY_API_KEY}`;
                 
-                const response = await fetch(modelEndpoint, {
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        contents: [{ parts: [{ text: promptText }] }] 
-                    })
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
 
-                if (!response.ok) {
-                    throw new Error(`Gagal terhubung ke AI (Status: ${response.status})`);
-                }
-
                 const data = await response.json();
-                
+
                 if (data.error) {
                     throw new Error(data.error.message);
                 }
 
-                const resultText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, AI tidak merespon dengan benar.";
-
-                // Tampilkan Hasil
-                output.innerText = resultText;
+                const result = data.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, gagal merangkai pesan.";
+                document.getElementById('outputMessage').innerText = result;
+                document.getElementById('waLink').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(result)}`;
+                
                 resultContainer.classList.remove('hidden');
-                resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                setTimeout(() => {
+                    resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
                 
-                // Update WhatsApp Link
-                document.getElementById('waLink').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(resultText)}`;
-                
-                showNotification("Yeay! Pesan berhasil dirangkai.", "success");
+                showNotification("Berhasil dirangkai!", "success");
 
-            } catch (error) {
-                console.error("AI Error:", error);
-                showNotification(`Waduh, terjadi kesalahan: ${error.message}. Coba klik sekali lagi.`, "error");
+            } catch (err) {
+                console.error(err);
+                showNotification(`Waduh Tenia, ada error: ${err.message}`, "error");
             } finally {
-                // Kembalikan tombol ke semula
                 btn.disabled = false;
-                btnText.innerHTML = "Rangkai Pesan Tulus";
+                btnText.innerText = "✨ Rangkai Pesan Tulus";
             }
         }
 
         function copyText() {
-            const textToCopy = document.getElementById('outputMessage').innerText;
-            
-            // Fallback copy method for wider compatibility (especially in iframes)
-            const textArea = document.createElement("textarea");
-            textArea.value = textToCopy;
-            document.body.appendChild(textArea);
-            textArea.select();
+            const text = document.getElementById('outputMessage').innerText;
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
             try {
                 document.execCommand('copy');
-                showNotification("Teks berhasil disalin ke clipboard!", "success");
+                showNotification("Teks berhasil disalin!", "success");
             } catch (err) {
-                showNotification("Gagal menyalin teks. Silakan blok dan copy manual.", "error");
+                showNotification("Gagal menyalin teks.", "error");
             }
-            document.body.removeChild(textArea);
+            document.body.removeChild(el);
         }
     </script>
 </body>
