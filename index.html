@@ -41,17 +41,14 @@
     <main class="max-w-2xl mx-auto -mt-8 px-4 sm:px-6 relative z-20">
         <div class="bg-white rounded-3xl p-6 md:p-8 shadow-2xl border border-slate-100 text-center">
             
-            <!-- Notification Box -->
             <div id="notificationBox" class="hidden mb-6 p-4 rounded-xl text-sm font-semibold transition-all duration-300"></div>
 
             <div class="bg-gold-soft rounded-2xl p-5 md:p-6 mb-8 border border-gold-main/30 text-left">
-                <!-- Input 1: Nama -->
                 <div class="mb-5">
                     <label class="block text-sm font-bold text-sage-dark mb-2">1. Siapa Penerimanya?</label>
                     <input type="text" id="recipientName" placeholder="Contoh: Pak Budi (Mantan Atasan)" class="w-full p-3.5 rounded-xl bg-white border border-slate-200 focus:ring-2 focus:ring-[#4f6f52] outline-none transition shadow-sm text-sm">
                 </div>
 
-                <!-- Input 2 & 3: Suasana & Bahasa -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                     <div>
                         <label class="block text-sm font-bold text-sage-dark mb-2">2. Pilih Suasana</label>
@@ -73,7 +70,6 @@
                     </div>
                 </div>
 
-                <!-- Input 4: Konteks -->
                 <div>
                     <label class="block text-sm font-bold text-sage-dark mb-2">
                         4. Cerita Spesial Kamu Dengannya <span class="text-[10px] font-normal text-slate-500 uppercase ml-1">(Opsional)</span>
@@ -82,12 +78,10 @@
                 </div>
             </div>
 
-            <!-- Generate Button -->
             <button onclick="generateMessage()" id="btnAction" class="w-full bg-sage-dark text-white font-bold py-4 rounded-2xl transition shadow-lg flex items-center justify-center gap-2 hover:bg-slate-800 active:scale-95 transform">
                 <span id="btnText">✨ Rangkai Pesan Tulus</span>
             </button>
 
-            <!-- Result Box -->
             <div id="resultContainer" class="hidden mt-10 pt-8 border-t-2 border-dashed border-slate-200">
                 <div id="outputMessage" class="bg-white p-6 rounded-2xl border-2 border-gold-main text-slate-700 leading-relaxed text-left text-sm md:text-base shadow-inner whitespace-pre-wrap mb-5"></div>
                 <div class="grid grid-cols-2 gap-3">
@@ -103,17 +97,13 @@
     </main>
 
     <script>
-        // API KEY MILIK TENIA
         const MY_API_KEY = "AIzaSyCCRP_2eBbf2SDcdVuwnbjIGEFlKpSWcjY";
 
         function showNotification(message, type = 'error') {
             const box = document.getElementById('notificationBox');
             box.innerText = message;
             box.className = `mb-6 p-4 rounded-xl text-sm font-semibold transition-all duration-300 block ${type === 'error' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-green-50 text-green-700 border border-green-200'}`;
-            
-            if(type === 'error') {
-                box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+            if(type === 'error') box.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         async function generateMessage() {
@@ -139,8 +129,8 @@
             const prompt = `Tuliskan satu ucapan selamat Hari Raya Idul Fitri untuk ${name}. Suasana: ${mood}. Bahasa: ${lang}. ${context ? `Hubungkan dengan cerita: ${context}` : ''}. Langsung hasil ucapannya saja tanpa pengantar.`;
 
             try {
-                // UPDATE: Menggunakan endpoint v1 yang lebih stabil untuk gemini-1.5-flash
-                const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${MY_API_KEY}`;
+                // MENGGUNAKAN MODEL gemini-pro (Endpoint v1)
+                const url = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${MY_API_KEY}`;
                 
                 const response = await fetch(url, {
                     method: 'POST',
@@ -159,15 +149,12 @@
                 document.getElementById('waLink').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(result)}`;
                 
                 resultContainer.classList.remove('hidden');
-                setTimeout(() => {
-                    resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 100);
-                
+                setTimeout(() => resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
                 showNotification("Berhasil dirangkai!", "success");
 
             } catch (err) {
                 console.error(err);
-                showNotification(`Terjadi kendala teknis: ${err.message}. Tenia, coba cek apakah API Key di Google AI Studio sudah aktif untuk model 1.5 Flash.`, "error");
+                showNotification(`Percobaan Model Alternatif: ${err.message}. Tenia, coba klik sekali lagi atau pastikan API Key kamu tidak terbatasi.`, "error");
             } finally {
                 btn.disabled = false;
                 btnText.innerText = "✨ Rangkai Pesan Tulus";
@@ -176,17 +163,17 @@
 
         function copyText() {
             const text = document.getElementById('outputMessage').innerText;
-            const el = document.createElement('textarea');
-            el.value = text;
-            document.body.appendChild(el);
-            el.select();
-            try {
-                document.execCommand('copy');
+            navigator.clipboard.writeText(text).then(() => {
                 showNotification("Teks berhasil disalin!", "success");
-            } catch (err) {
-                showNotification("Gagal menyalin teks.", "error");
-            }
-            document.body.removeChild(el);
+            }).catch(() => {
+                const el = document.createElement('textarea');
+                el.value = text;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                showNotification("Teks berhasil disalin!", "success");
+            });
         }
     </script>
 </body>
