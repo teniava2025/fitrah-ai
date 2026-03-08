@@ -139,8 +139,8 @@
             const prompt = `Tuliskan satu ucapan selamat Hari Raya Idul Fitri untuk ${name}. Suasana: ${mood}. Bahasa: ${lang}. ${context ? `Hubungkan dengan cerita: ${context}` : ''}. Langsung hasil ucapannya saja tanpa pengantar.`;
 
             try {
-                // Gunakan model gemini-1.5-flash untuk kompatibilitas API Key standar
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${MY_API_KEY}`;
+                // UPDATE: Menggunakan endpoint v1 yang lebih stabil untuk gemini-1.5-flash
+                const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${MY_API_KEY}`;
                 
                 const response = await fetch(url, {
                     method: 'POST',
@@ -167,7 +167,7 @@
 
             } catch (err) {
                 console.error(err);
-                showNotification(`Waduh Tenia, ada error: ${err.message}`, "error");
+                showNotification(`Terjadi kendala teknis: ${err.message}. Tenia, coba cek apakah API Key di Google AI Studio sudah aktif untuk model 1.5 Flash.`, "error");
             } finally {
                 btn.disabled = false;
                 btnText.innerText = "✨ Rangkai Pesan Tulus";
